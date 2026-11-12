@@ -1,0 +1,60 @@
+# dependencies
+/node_modules
+/studio/node_modules
+
+# local toolchain (portable Node used to bootstrap the project)
+/.tooling
+
+# next.js / build output
+/.next/
+/out/
+/build
+/studio/dist
+/studio/.sanity
+
+# testing
+/coverage
+/test-results
+/playwright-report
+
+# env files — never commit secrets (.env.example is the template)
+.env*
+!.env.example
+
+# Clash Display is licensed for self-hosting but not for redistribution through
+# a repository, so it is downloaded at build time by scripts/fetch-fonts.mjs.
+/app/fonts/ClashDisplay-Variable.woff2
+
+# private planning material and third-party reference photos (not for the public repo)
+/WhatsApp*/
+/*.docx
+/PRD*.md
+/Checklist*.md
+/Spesifikasi*.md
+/AGENTS.md
+
+# misc
+.DS_Store
+*.pem
+*.tsbuildinfo
+next-env.d.ts
+.vercel
+npm-debug.log*
+.pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# editor / OS / tooling
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+Thumbs.db
+*.swp
+.claude/
+.eslintcache
+.swc/
+.turbo/
+
+/public/gpu-benchmarks

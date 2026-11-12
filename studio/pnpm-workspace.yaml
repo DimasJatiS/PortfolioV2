@@ -1,0 +1,8 @@
+# The studio is its own project (not part of the site's install), so the site
+# never downloads or bundles Studio dependencies.
+packages: []
+allowBuilds:
+  esbuild: false
+  "@parcel/watcher": false
+  "@swc/core": false
+  sharp: false

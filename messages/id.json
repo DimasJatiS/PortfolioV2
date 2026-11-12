@@ -1,0 +1,211 @@
+{
+  "meta": {
+    "title": "Dimas Jati Satria — Software Engineer",
+    "titleTemplate": "%s — Dimas Jati Satria",
+    "description": "Portofolio Dimas Jati Satria, software engineer yang membangun di seluruh lapisan: web, mobile, dan AI. Long live learner."
+  },
+  "a11y": {
+    "skip": "Langsung ke konten",
+    "home": "Dimas Jati Satria, beranda",
+    "mainNav": "Utama",
+    "footerNav": "Footer",
+    "openMenu": "Buka menu",
+    "closeMenu": "Tutup menu",
+    "menu": "Menu",
+    "switchLocale": "Read in English",
+    "newTab": "terbuka di tab baru",
+    "sceneAlt": "Ilustrasi dekoratif: piramida kaca dengan cahaya oranye di puncaknya dan garis-garis cahaya tipis yang turun ke alasnya."
+  },
+  "loader": {
+    "label": "MEMUAT",
+    "slow": "Cahaya masih dimuat…",
+    "skip": "Langsung ke konten"
+  },
+  "hero": {
+    "eyebrow": "LONG LIVE LEARNER",
+    "name": "DIMAS JATI",
+    "role": "Software Engineer",
+    "statementLead": "Software engineer yang mengubah rasa ingin tahu menjadi produk yang",
+    "statementAccent": "tergarap rapi",
+    "statementTail": ".",
+    "cta": {
+      "work": "Lihat karya",
+      "cv": "Unduh CV",
+      "resume": "Lihat resume"
+    },
+    "scroll": "Scroll untuk mengikuti cahaya"
+  },
+  "acts": {
+    "incidence": "Incidence",
+    "refraction": "Refraction",
+    "dispersion": "Dispersion",
+    "shards": "Shards",
+    "convergence": "Convergence"
+  },
+  "refraction": {
+    "title": "Cahaya masuk, karya keluar."
+  },
+  "spectrum": {
+    "title": "Spektrum",
+    "beam": {
+      "frontend-creative": "Frontend & Kreatif",
+      "backend-data": "Backend & Data",
+      "mobile-ai": "Mobile & AI",
+      "design-collab": "Desain & Kolaborasi"
+    }
+  },
+  "shards": {
+    "title": "Karya pilihan",
+    "cta": "Baca studi kasus",
+    "all": "Semua karya"
+  },
+  "recently": {
+    "title": "Terbaru",
+    "empty": "Aktivitas terbaru akan segera tampil di sini."
+  },
+  "convergence": {
+    "title": "Ayo bangun sesuatu",
+    "sub": "Terbuka untuk magang dan posisi full-time.",
+    "cta": "Hubungi aku"
+  },
+  "nav": {
+    "work": "Karya",
+    "about": "Tentang",
+    "resume": "Resume",
+    "lab": "Lab",
+    "writing": "Tulisan",
+    "contact": "Kontak",
+    "cv": "CV"
+  },
+  "toggle": {
+    "night": "Mode malam",
+    "sound": "Suara",
+    "locale": "Bahasa"
+  },
+  "availability": {
+    "label": "Tersedia untuk magang · {start} · {months}+ bulan · {mode}",
+    "mode": {
+      "onsite": "onsite",
+      "remote": "remote",
+      "both": "onsite atau remote"
+    }
+  },
+  "footer": {
+    "line": "Long live learner. Dibangun dengan cahaya dan kode.",
+    "top": "Kembali ke atas",
+    "timezone": "Yogyakarta, Indonesia · WIB (UTC+7)"
+  },
+  "form": {
+    "name": "Nama",
+    "email": "Email",
+    "company": "Perusahaan (opsional)",
+    "message": "Pesan",
+    "send": "Kirim pesan",
+    "success": "Terima kasih, pesanmu sudah terkirim. Aku akan membalas dalam 2 hari.",
+    "error": "Ada yang salah. Coba lagi atau kirim email langsung.",
+    "invalidEmail": "Masukkan email yang valid.",
+    "required": "Kolom ini wajib diisi."
+  },
+  "work": {
+    "lead": "Studi kasus dan proyek di web, mobile, dan AI.",
+    "featured": "Unggulan",
+    "more": "Proyek lainnya",
+    "empty": "Proyek sedang disiapkan.",
+    "filter": {
+      "label": "Filter proyek",
+      "all": "Semua",
+      "web": "Web",
+      "mobile": "Mobile",
+      "ai": "AI",
+      "creative": "Kreatif"
+    },
+    "live": "Demo live",
+    "source": "Kode sumber"
+  },
+  "case": {
+    "role": "Peran",
+    "stack": "Stack",
+    "duration": "Durasi",
+    "problem": "Masalah",
+    "process": "Proses",
+    "decisions": "Keputusan kunci",
+    "result": "Hasil",
+    "next": "Proyek berikutnya",
+    "back": "Semua karya",
+    "pending": "Studi kasus lengkap sedang ditulis. Ringkasan, stack, dan tautan di atas sudah yang terbaru."
+  },
+  "about": {
+    "lead": "Pembelajar lebih dulu, engineer lewat praktik.",
+    "story": "Cerita",
+    "education": "Pendidikan",
+    "timeline": "Linimasa",
+    "interests": "Di luar kode",
+    "learning": "Sedang dipelajari",
+    "activities": "Aktivitas",
+    "activitiesEmpty": "Event, lomba, dan sertifikasi akan tampil di sini.",
+    "learningEmpty": "Akan diperbarui."
+  },
+  "resume": {
+    "lead": "Versi web dari CV-ku.",
+    "download": "Unduh PDF",
+    "pdfPending": "Versi PDF sedang disiapkan.",
+    "experience": "Pengalaman",
+    "education": "Pendidikan",
+    "organizations": "Organisasi & kepanitiaan",
+    "skills": "Keahlian",
+    "present": "Sekarang",
+    "empty": "Detail sedang ditambahkan."
+  },
+  "lab": {
+    "title": "Lab: eksperimen kecil dengan cahaya",
+    "lead": "Studi shader dan WebGL interaktif.",
+    "credit": "Terinspirasi studi cahaya geometris Zach Lieberman",
+    "empty": "Eksperimen pertama sedang dibangun.",
+    "source": "Lihat kode sumber"
+  },
+  "writing": {
+    "lead": "Catatan teknis tentang apa yang kubangun dan kupelajari.",
+    "readTime": "{n} menit baca",
+    "empty": "Artikel pertama sedang ditulis.",
+    "back": "Semua tulisan",
+    "contents": "Daftar isi"
+  },
+  "contact": {
+    "lead": "Cara tercepat menghubungiku adalah email. Aku membalas dalam dua hari.",
+    "email": "Email",
+    "elsewhere": "Di tempat lain",
+    "formPending": "Form kontak akan hadir di halaman ini. Untuk sekarang, email adalah cara terbaik."
+  },
+  "notFound": {
+    "title": "Tersesat di dalam cahaya",
+    "body": "Halaman ini tidak ada, atau sudah dipindahkan.",
+    "cta": "Kembali ke beranda"
+  },
+  "error": {
+    "title": "Cahayanya terpencar",
+    "body": "Ada yang salah saat memuat halaman ini. Coba lagi, atau kembali ke beranda.",
+    "retry": "Coba lagi",
+    "home": "Kembali ke beranda"
+  },
+  "easter": {
+    "hint": "Ketemu. Tekan R untuk mengganti spektrum."
+  },
+  "category": {
+    "web": "Web",
+    "mobile": "Mobile",
+    "ai": "AI",
+    "creative": "Kreatif"
+  },
+  "activityType": {
+    "event": "Event",
+    "competition": "Lomba",
+    "certification": "Sertifikasi",
+    "learning": "Belajar",
+    "release": "Rilis",
+    "organization": "Organisasi"
+  },
+  "styleguide": {
+    "title": "Style tile",
+    "lead": "Arah visual Refraction yang dikunci: token, tipografi, komponen, dan motion, dalam mode Day dan Night."
+  }
+}

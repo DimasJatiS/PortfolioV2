@@ -1,0 +1,12 @@
+# Versions are pinned exactly (PRD section 10): package.json records the precise
+# version and pnpm-lock.yaml the full tree. Dependabot proposes patch updates.
+saveExact: true
+
+# Build scripts are opt-in under pnpm. None of these are needed: each package
+# ships prebuilt binaries, so their postinstall steps are explicitly skipped.
+allowBuilds:
+  sharp: false
+  unrs-resolver: false
+  "@parcel/watcher": false
+  "@swc/core": false
+  esbuild: false

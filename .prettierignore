@@ -1,0 +1,12 @@
+.next
+.tooling
+node_modules
+pnpm-lock.yaml
+public
+studio/dist
+studio/node_modules
+*.md
+*.docx
+WhatsApp*
+test-results
+playwright-report

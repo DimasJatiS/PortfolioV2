@@ -1,0 +1,62 @@
+{
+  "name": "refraction",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/prepare-assets.mjs && next dev",
+    "build": "node scripts/prepare-assets.mjs && next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "next typegen && tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "assets": "node scripts/prepare-assets.mjs",
+    "hdri": "node scripts/hdr-downscale.mjs",
+    "seed": "node --env-file-if-exists=.env.local scripts/seed-sanity.ts",
+    "check": "pnpm lint && pnpm typecheck && pnpm test"
+  },
+  "dependencies": {
+    "@react-three/drei": "10.7.9",
+    "@react-three/fiber": "9.8.2",
+    "@sanity/client": "8.15.1",
+    "@sanity/image-url": "2.1.1",
+    "clsx": "2.1.1",
+    "detect-gpu": "5.0.70",
+    "groq-js": "2.0.1",
+    "maath": "0.10.8",
+    "next": "16.4.6",
+    "next-intl": "4.14.10",
+    "next-sanity": "13.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "server-only": "0.0.1",
+    "tailwind-merge": "3.7.0",
+    "three": "0.187.0",
+    "zod": "4.6.7",
+    "zustand": "5.1.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.0",
+    "@tailwindcss/turbopack": "4.3.3",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/three": "0.187.0",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.4.6",
+    "prettier": "3.9.10",
+    "prettier-plugin-tailwindcss": "0.8.1",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3",
+    "vitest": "5.1.0"
+  },
+  "packageManager": "pnpm@12.18.0",
+  "description": "Refraction — immersive 3D portfolio of Dimas Jati Satria",
+  "engines": {
+    "node": ">=24 <25"
+  }
+}

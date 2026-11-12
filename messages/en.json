@@ -1,0 +1,211 @@
+{
+  "meta": {
+    "title": "Dimas Jati Satria — Software Engineer",
+    "titleTemplate": "%s — Dimas Jati Satria",
+    "description": "Portfolio of Dimas Jati Satria, a software engineer building across the stack: web, mobile and AI. Long live learner."
+  },
+  "a11y": {
+    "skip": "Skip to content",
+    "home": "Dimas Jati Satria, home",
+    "mainNav": "Main",
+    "footerNav": "Footer",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "menu": "Menu",
+    "switchLocale": "Baca dalam Bahasa Indonesia",
+    "newTab": "opens in a new tab",
+    "sceneAlt": "Decorative illustration: a glass pyramid with an orange light at its apex and thin rays running down to its base."
+  },
+  "loader": {
+    "label": "LOADING",
+    "slow": "Still loading the light…",
+    "skip": "Skip to content"
+  },
+  "hero": {
+    "eyebrow": "LONG LIVE LEARNER",
+    "name": "DIMAS JATI",
+    "role": "Software Engineer",
+    "statementLead": "Software engineer turning curiosity into",
+    "statementAccent": "crafted",
+    "statementTail": "products.",
+    "cta": {
+      "work": "View work",
+      "cv": "Download CV",
+      "resume": "View résumé"
+    },
+    "scroll": "Scroll to follow the light"
+  },
+  "acts": {
+    "incidence": "Incidence",
+    "refraction": "Refraction",
+    "dispersion": "Dispersion",
+    "shards": "Shards",
+    "convergence": "Convergence"
+  },
+  "refraction": {
+    "title": "Light in, work out."
+  },
+  "spectrum": {
+    "title": "The spectrum",
+    "beam": {
+      "frontend-creative": "Frontend & Creative",
+      "backend-data": "Backend & Data",
+      "mobile-ai": "Mobile & AI",
+      "design-collab": "Design & Collaboration"
+    }
+  },
+  "shards": {
+    "title": "Selected work",
+    "cta": "Read case study",
+    "all": "All work"
+  },
+  "recently": {
+    "title": "Recently",
+    "empty": "Recent activity will appear here soon."
+  },
+  "convergence": {
+    "title": "Let's build something",
+    "sub": "Open to internships and full-time roles.",
+    "cta": "Get in touch"
+  },
+  "nav": {
+    "work": "Work",
+    "about": "About",
+    "resume": "Resume",
+    "lab": "Lab",
+    "writing": "Writing",
+    "contact": "Contact",
+    "cv": "CV"
+  },
+  "toggle": {
+    "night": "Night mode",
+    "sound": "Sound",
+    "locale": "Language"
+  },
+  "availability": {
+    "label": "Available for internship · {start} · {months}+ months · {mode}",
+    "mode": {
+      "onsite": "onsite",
+      "remote": "remote",
+      "both": "onsite or remote"
+    }
+  },
+  "footer": {
+    "line": "Long live learner. Built with light and code.",
+    "top": "Back to top",
+    "timezone": "Yogyakarta, Indonesia · WIB (UTC+7)"
+  },
+  "form": {
+    "name": "Name",
+    "email": "Email",
+    "company": "Company (optional)",
+    "message": "Message",
+    "send": "Send message",
+    "success": "Thanks, your message is on its way. I'll reply within 2 days.",
+    "error": "Something went wrong. Please try again or email me directly.",
+    "invalidEmail": "Please enter a valid email.",
+    "required": "This field is required."
+  },
+  "work": {
+    "lead": "Case studies and projects across web, mobile and AI.",
+    "featured": "Featured",
+    "more": "More projects",
+    "empty": "Projects are on their way.",
+    "filter": {
+      "label": "Filter projects",
+      "all": "All",
+      "web": "Web",
+      "mobile": "Mobile",
+      "ai": "AI",
+      "creative": "Creative"
+    },
+    "live": "Live demo",
+    "source": "Source"
+  },
+  "case": {
+    "role": "Role",
+    "stack": "Stack",
+    "duration": "Duration",
+    "problem": "The problem",
+    "process": "Process",
+    "decisions": "Key decisions",
+    "result": "Result",
+    "next": "Next project",
+    "back": "All work",
+    "pending": "The full case study is being written. The summary, stack and links above are current."
+  },
+  "about": {
+    "lead": "A learner first, an engineer by practice.",
+    "story": "Story",
+    "education": "Education",
+    "timeline": "Timeline",
+    "interests": "Beyond code",
+    "learning": "Currently learning",
+    "activities": "Activity",
+    "activitiesEmpty": "Events, competitions and certifications will be listed here.",
+    "learningEmpty": "To be updated."
+  },
+  "resume": {
+    "lead": "The web version of my CV.",
+    "download": "Download PDF",
+    "pdfPending": "The PDF version is being prepared.",
+    "experience": "Experience",
+    "education": "Education",
+    "organizations": "Organizations & committees",
+    "skills": "Skills",
+    "present": "Present",
+    "empty": "Details are being added."
+  },
+  "lab": {
+    "title": "Lab: small experiments with light",
+    "lead": "Interactive shader and WebGL studies.",
+    "credit": "Inspired by Zach Lieberman's geometric light studies",
+    "empty": "The first experiments are being built.",
+    "source": "View source"
+  },
+  "writing": {
+    "lead": "Technical notes on what I build and learn.",
+    "readTime": "{n} min read",
+    "empty": "The first article is being written.",
+    "back": "All writing",
+    "contents": "Contents"
+  },
+  "contact": {
+    "lead": "The quickest way to reach me is email. I reply within two days.",
+    "email": "Email",
+    "elsewhere": "Elsewhere",
+    "formPending": "A contact form is coming to this page. Until then, email works best."
+  },
+  "notFound": {
+    "title": "Lost in the light",
+    "body": "This page does not exist, or it moved.",
+    "cta": "Back home"
+  },
+  "error": {
+    "title": "The light scattered",
+    "body": "Something went wrong while loading this page. You can try again, or head back home.",
+    "retry": "Try again",
+    "home": "Back home"
+  },
+  "easter": {
+    "hint": "You found it. Press R to change the spectrum."
+  },
+  "category": {
+    "web": "Web",
+    "mobile": "Mobile",
+    "ai": "AI",
+    "creative": "Creative"
+  },
+  "activityType": {
+    "event": "Event",
+    "competition": "Competition",
+    "certification": "Certification",
+    "learning": "Learning",
+    "release": "Release",
+    "organization": "Organization"
+  },
+  "styleguide": {
+    "title": "Style tile",
+    "lead": "The locked visual direction for Refraction: tokens, type, components and motion, in Day and Night."
+  }
+}

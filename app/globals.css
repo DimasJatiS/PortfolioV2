@@ -1,0 +1,519 @@
+@import "tailwindcss";
+
+/* `night:` variant, driven by the data-theme attribute (never by a class). */
+@custom-variant night (&:where([data-theme="night"], [data-theme="night"] *));
+
+/* ==========================================================================
+   1. Raw palette — PRD section 5. Mirrored in lib/tokens.ts (kept in sync by
+      tests/tokens.test.ts). Never reference these from components; use the
+      semantic tokens below so Day/Night is a token swap.
+   ========================================================================== */
+:root {
+  --ivory-50: #fbf8f1;
+  --ivory-100: #f3ede0;
+  --ink-900: #14201a;
+  --ink-600: #4b5a52;
+  --green-950: #06261b;
+  --green-900: #0b3d2c;
+  --green-700: #1f5a43;
+  --sage-300: #a9bfa8;
+  --amber-400: #e3a63b;
+  --orange-400: #f28b55;
+  --orange-500: #e8692a;
+  --orange-700: #b8501c;
+  --orange-800: #a84616;
+
+  /* Motion — Spesifikasi Lanjutan section 1. Mirrored in lib/motion.ts. */
+  --ease-light: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-xs: 150ms;
+  --dur-s: 300ms;
+  --dur-m: 600ms;
+  --dur-l: 900ms;
+  --dur-xl: 1400ms;
+  --stagger-char: 20ms;
+  --stagger-line: 80ms;
+
+  /* Layout — 8px unit, 24px gutter, 1440px max width. */
+  --unit: 8px;
+  --gutter: 24px;
+  --page-max: 1440px;
+  --page-margin: 16px;
+  --nav-height: 64px;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --page-margin: 24px;
+  }
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --page-margin: 48px;
+    --nav-height: 72px;
+  }
+}
+
+/* ==========================================================================
+   2. Semantic tokens. 60-30-10: ivory for space, green for structure, orange
+      only for what must be clicked or noticed. Night inverts the proportions.
+      The data-theme attribute also works on any wrapper, which is how the
+      style tile shows both themes side by side.
+   ========================================================================== */
+:root,
+[data-theme="day"] {
+  color-scheme: light;
+
+  --bg: var(--ivory-50);
+  --fg: var(--ink-900);
+  --fg-muted: var(--ink-600);
+  --heading: var(--green-900);
+  --accent: var(--orange-500);
+  --accent-text: var(--orange-700);
+  --line: var(--sage-300);
+  --line-strong: var(--green-700);
+
+  --alt-bg: var(--ivory-100);
+  --alt-accent-text: var(--orange-800);
+
+  --inv-bg: var(--green-900);
+  --inv-fg: var(--ivory-50);
+  --inv-fg-muted: var(--sage-300);
+  --inv-heading: var(--ivory-50);
+  --inv-accent-text: var(--orange-400);
+  --inv-line: var(--green-700);
+  --inv-line-strong: var(--sage-300);
+
+  --grain-opacity: 0.07;
+  --grain-blend: multiply;
+}
+
+[data-theme="night"] {
+  color-scheme: dark;
+
+  --bg: var(--green-950);
+  --fg: var(--ivory-50);
+  --fg-muted: var(--sage-300);
+  --heading: var(--ivory-50);
+  --accent: var(--orange-500);
+  --accent-text: var(--orange-400);
+  --line: var(--green-700);
+  --line-strong: var(--sage-300);
+
+  --alt-bg: var(--green-900);
+  --alt-accent-text: var(--orange-400);
+
+  --inv-bg: var(--ivory-50);
+  --inv-fg: var(--ink-900);
+  --inv-fg-muted: var(--ink-600);
+  --inv-heading: var(--green-900);
+  --inv-accent-text: var(--orange-700);
+  --inv-line: var(--sage-300);
+  --inv-line-strong: var(--green-700);
+
+  --grain-opacity: 0.045;
+  --grain-blend: screen;
+}
+
+/* ==========================================================================
+   3. Tailwind theme
+   ========================================================================== */
+@theme inline {
+  --color-surface: var(--bg);
+  --color-surface-alt: var(--alt-bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--fg-muted);
+  --color-heading: var(--heading);
+  --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  --color-ivory-50: var(--ivory-50);
+  --color-ivory-100: var(--ivory-100);
+  --color-ink-900: var(--ink-900);
+  --color-green-950: var(--green-950);
+  --color-green-900: var(--green-900);
+  --color-green-700: var(--green-700);
+  --color-sage-300: var(--sage-300);
+  --color-amber-400: var(--amber-400);
+  --color-orange-500: var(--orange-500);
+  --color-orange-700: var(--orange-700);
+
+  --font-display: var(--font-clash), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Fluid type scale: ratio 1.25 at 360px up to 1.333 at 1440px. */
+  --text-step--1: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --text-step-0: clamp(1rem, 0.96rem + 0.19vw, 1.125rem);
+  --text-step-1: clamp(1.25rem, 1.17rem + 0.37vw, 1.5rem);
+  --text-step-2: clamp(1.5625rem, 1.42rem + 0.65vw, 2rem);
+  --text-step-3: clamp(1.9531rem, 1.72rem + 1.06vw, 2.6656rem);
+  --text-step-4: clamp(2.4414rem, 2.07rem + 1.65vw, 3.5531rem);
+  --text-step-5: clamp(3.0518rem, 2.49rem + 2.5vw, 4.7363rem);
+  --text-step-6: clamp(3.8147rem, 2.98rem + 3.7vw, 6.3135rem);
+  --text-display: clamp(4.5rem, 2.67rem + 8.15vw, 10rem);
+
+  --tracking-display: -0.03em;
+  --tracking-designer: 0.3em;
+  --tracking-label: 0.08em;
+
+  --ease-light: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --animate-meteor: meteor 5s linear infinite;
+  --animate-pulse-soft: pulse-soft 1.6s var(--ease-inout) infinite alternate;
+
+  @keyframes meteor {
+    0% {
+      transform: rotate(var(--angle)) translateX(0);
+      opacity: 1;
+    }
+    70% {
+      opacity: 1;
+    }
+    100% {
+      transform: rotate(var(--angle)) translateX(-500px);
+      opacity: 0;
+    }
+  }
+
+  @keyframes pulse-soft {
+    from {
+      opacity: 0.4;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+/* ==========================================================================
+   4. Base
+   ========================================================================== */
+@layer base {
+  html {
+    background: var(--bg);
+    color: var(--fg);
+    scrollbar-gutter: stable;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100dvh;
+    font-family: var(--font-sans);
+    font-size: var(--text-step-0);
+    line-height: 1.6;
+    /* Layouts must never scroll sideways, from 360px to 2560px and at 200% zoom. */
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--orange-500);
+    color: var(--ink-900);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--orange-500);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--heading);
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Day <-> Night: DOM colours ease over dur-m, in step with the scene. The
+     class is added by the theme toggle only for the duration of the change. */
+  html.theme-transition,
+  html.theme-transition *,
+  html.theme-transition *::before,
+  html.theme-transition *::after {
+    transition:
+      background-color var(--dur-m) var(--ease-light),
+      color var(--dur-m) var(--ease-light),
+      border-color var(--dur-m) var(--ease-light),
+      fill var(--dur-m) var(--ease-light),
+      stroke var(--dur-m) var(--ease-light) !important;
+  }
+}
+
+/* ==========================================================================
+   5. Surfaces — a surface re-points the semantic tokens for its subtree, so
+      components stay unaware of where they are placed.
+   ========================================================================== */
+@utility surface-alt {
+  --bg: var(--alt-bg);
+  --accent-text: var(--alt-accent-text);
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+@utility surface-inverse {
+  --bg: var(--inv-bg);
+  --fg: var(--inv-fg);
+  --fg-muted: var(--inv-fg-muted);
+  --heading: var(--inv-heading);
+  --accent-text: var(--inv-accent-text);
+  --line: var(--inv-line);
+  --line-strong: var(--inv-line-strong);
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+/* ==========================================================================
+   6. Layout primitives
+   ========================================================================== */
+@utility container-page {
+  width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--page-margin);
+}
+
+/* 4 columns on mobile, 6 on tablet, 12 on desktop; 24px gutter. */
+@utility grid-page {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: var(--gutter);
+
+  @media (min-width: 48rem) {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  @media (min-width: 64rem) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+/* ==========================================================================
+   7. Type roles
+   ========================================================================== */
+/* Geist Mono label: eyebrows, technical captions. */
+@utility type-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-step--1);
+  line-height: 1.4;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+/* Clash 200–300, capitals, very wide tracking: names and section titles. */
+@utility type-designer {
+  font-family: var(--font-display);
+  font-weight: 200;
+  line-height: 1.1;
+  letter-spacing: var(--tracking-designer);
+  text-transform: uppercase;
+  /* Tracking adds space after the last glyph; pull it back to stay optically centred. */
+  margin-inline-end: calc(var(--tracking-designer) * -1);
+}
+
+/* Clash 600: statements and large numerals. */
+@utility type-statement {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: var(--tracking-display);
+}
+
+/* Instrument Serif italic accent inside a statement. */
+@utility type-accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* ==========================================================================
+   8. Hairline — the 1px beam reused as a section divider
+   ========================================================================== */
+@utility hairline {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--line) 12%,
+    var(--line) 88%,
+    transparent
+  );
+}
+
+/* ==========================================================================
+   9. Film grain — one tiled SVG noise over everything, including the canvas.
+   ========================================================================== */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: var(--grain-blend);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+}
+
+@media print {
+  .grain {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   10. KineticText — letters thicken around the cursor (Clash variable 200 → 600).
+       Weight is driven through font-variation-settings, per the motion spec.
+   ========================================================================== */
+.kinetic {
+  --kinetic-rest: 200;
+  --kinetic-peak: 600;
+  font-variation-settings: "wght" var(--kinetic-rest);
+}
+
+.kinetic-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.kinetic-letter {
+  --w: var(--kinetic-rest);
+  display: inline-block;
+  font-variation-settings: "wght" var(--w);
+  transition: font-variation-settings var(--dur-s) var(--ease-light);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .kinetic-letter:hover {
+    --w: var(--kinetic-peak);
+  }
+
+  .kinetic-letter:hover + .kinetic-letter,
+  .kinetic-letter:has(+ .kinetic-letter:hover) {
+    --w: calc(var(--kinetic-rest) + (var(--kinetic-peak) - var(--kinetic-rest)) * 0.6);
+  }
+
+  .kinetic-letter:hover + .kinetic-letter + .kinetic-letter,
+  .kinetic-letter:has(+ .kinetic-letter + .kinetic-letter:hover) {
+    --w: calc(var(--kinetic-rest) + (var(--kinetic-peak) - var(--kinetic-rest)) * 0.28);
+  }
+}
+
+/* Touch devices have no hover: sweep through the letters once, on entering the viewport. */
+@media (hover: none) {
+  .kinetic[data-swept="true"] .kinetic-letter {
+    animation: kinetic-sweep var(--dur-l) var(--ease-light) both;
+    animation-delay: calc(var(--i, 0) * var(--stagger-char));
+  }
+}
+
+@keyframes kinetic-sweep {
+  0%,
+  100% {
+    font-variation-settings: "wght" var(--kinetic-rest);
+  }
+  40% {
+    font-variation-settings: "wght" var(--kinetic-peak);
+  }
+}
+
+/* ==========================================================================
+   11. Reduced motion — every animation has a calm counterpart.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+
+  html.theme-transition,
+  html.theme-transition *,
+  html.theme-transition *::before,
+  html.theme-transition *::after {
+    transition-duration: 200ms !important;
+  }
+
+  .kinetic {
+    --kinetic-rest: 300;
+    --kinetic-peak: 300;
+  }
+
+  .kinetic-letter {
+    transition: none;
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   12. Print — the résumé must come out clean on paper.
+   ========================================================================== */
+@media print {
+  :root,
+  [data-theme="night"] {
+    --bg: #fff;
+    --fg: #000;
+    --fg-muted: #333;
+    --heading: #000;
+    --accent-text: #000;
+    --line: #999;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    font-size: 11pt;
+  }
+}
+
+/* ==========================================================================
+   13. Hero name — tracking narrows from 0.6em to 0.3em as it appears
+       (PRD 7.2, Incidence). One-off, and skipped under reduced motion.
+   ========================================================================== */
+@keyframes tracking-in {
+  from {
+    letter-spacing: 0.6em;
+    opacity: 0;
+  }
+  to {
+    letter-spacing: var(--tracking-designer);
+    opacity: 1;
+  }
+}
+
+.hero-name {
+  animation: tracking-in var(--dur-xl) var(--ease-light) both;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Light travels from the apex downwards: content enters from above. */
+.rise-in {
+  animation: rise-in var(--dur-m) var(--ease-light) both;
+  animation-delay: calc(var(--order, 0) * var(--stagger-line));
+}
