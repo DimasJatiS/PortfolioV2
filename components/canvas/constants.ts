@@ -16,5 +16,9 @@ export const CAMERA = {
   parallax: { x: 0.31, y: 0.2 },
 } as const;
 
-/** Where the scene sits for the immersive Home and for the editorial pages. */
-export type SceneMode = "hero" | "ambient";
+/**
+ * - `story`   Home with motion: the camera flies the story path (Spesifikasi Lanjutan 9–11)
+ * - `hero`    Home with reduced motion: one still hero frame
+ * - `ambient` editorial pages: a small pyramid beside the page header
+ */
+export type SceneMode = "story" | "hero" | "ambient";

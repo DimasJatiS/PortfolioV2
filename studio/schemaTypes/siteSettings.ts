@@ -45,7 +45,7 @@ export const siteSettings = defineType({
     defineField({
       name: "manifesto",
       title: "Manifesto",
-      description: "3–5 lines for the Refraction act on Home.",
+      description: "3–5 lines for the Ascent act on Home.",
       type: "array",
       group: "identity",
       of: [defineArrayMember({ type: "localeString" })],

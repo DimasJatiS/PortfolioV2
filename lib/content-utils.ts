@@ -1,18 +1,18 @@
-import { BEAMS, type Beam } from "@/sanity/constants";
+import { FACES, type Face } from "@/sanity/constants";
 import type { SiteSettings, Skill } from "@/sanity/types";
 
 /** Pure helpers for shaping content. No I/O, safe to unit test and to use anywhere. */
 
-export function groupSkillsByBeam(skills: readonly Skill[]): Record<Beam, Skill[]> {
-  const groups = Object.fromEntries(BEAMS.map((beam) => [beam, [] as Skill[]])) as Record<
-    Beam,
+export function groupSkillsByFace(skills: readonly Skill[]): Record<Face, Skill[]> {
+  const groups = Object.fromEntries(FACES.map((face) => [face, [] as Skill[]])) as Record<
+    Face,
     Skill[]
   >;
   for (const skill of skills) {
-    if (skill.beam) groups[skill.beam].push(skill);
+    if (skill.face) groups[skill.face].push(skill);
   }
-  for (const beam of BEAMS) {
-    groups[beam].sort((a, b) => a.order - b.order || a.name.localeCompare(b.name));
+  for (const face of FACES) {
+    groups[face].sort((a, b) => a.order - b.order || a.name.localeCompare(b.name));
   }
   return groups;
 }

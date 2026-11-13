@@ -38,7 +38,7 @@ export default async function WorkPage({ params }: PageProps<"/[locale]/work">) 
             project={project}
             categoryLabels={categoryLabels}
             stackLabel={t("case.stack")}
-            cta={t("shards.cta")}
+            cta={t("blocks.cta")}
           />
         </li>
       ))}

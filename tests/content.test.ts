@@ -3,7 +3,7 @@ import { z } from "zod";
 import {
   formatLinkLabel,
   getCvLink,
-  groupSkillsByBeam,
+  groupSkillsByFace,
   readingMinutes,
   splitAccent,
 } from "@/lib/content-utils";
@@ -13,7 +13,7 @@ import { seedDocuments } from "@/sanity/seed/data";
 import {
   activitySchema,
   articleSchema,
-  BEAMS,
+  FACES,
   experienceSchema,
   labExperimentSchema,
   projectSchema,
@@ -107,12 +107,12 @@ describe.each(["en", "id"] as const)("queries against seed content (%s)", (local
     expect(missing).toBeNull();
   });
 
-  it("skills: every beam has entries; stack-only skills carry no beam", async () => {
+  it("skills: every face has entries; stack-only skills carry no face", async () => {
     const skills = z.array(skillSchema).parse(await run(queries.skillsQuery));
-    const groups = groupSkillsByBeam(skills);
-    for (const beam of BEAMS) expect(groups[beam].length, beam).toBeGreaterThanOrEqual(5);
+    const groups = groupSkillsByFace(skills);
+    for (const face of FACES) expect(groups[face].length, face).toBeGreaterThanOrEqual(5);
     expect(groups["frontend-creative"][0]?.name).toBe("React");
-    expect(skills.find((skill) => skill.name === "MySQL")?.beam).toBeUndefined();
+    expect(skills.find((skill) => skill.name === "MySQL")?.face).toBeUndefined();
   });
 
   it("experience, activity, article and lab queries are valid and typed", async () => {

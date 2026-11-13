@@ -36,25 +36,25 @@
     "scroll": "Scroll to follow the light"
   },
   "acts": {
-    "incidence": "Incidence",
-    "refraction": "Refraction",
-    "dispersion": "Dispersion",
-    "shards": "Shards",
-    "convergence": "Convergence"
+    "apex": "Apex",
+    "ascent": "Ascent",
+    "faces": "Faces",
+    "blocks": "Blocks",
+    "base": "Base"
   },
-  "refraction": {
-    "title": "Light in, work out."
+  "ascent": {
+    "title": "Built from the base up."
   },
-  "spectrum": {
-    "title": "The spectrum",
-    "beam": {
+  "faces": {
+    "title": "Four faces",
+    "items": {
       "frontend-creative": "Frontend & Creative",
       "backend-data": "Backend & Data",
       "mobile-ai": "Mobile & AI",
       "design-collab": "Design & Collaboration"
     }
   },
-  "shards": {
+  "blocks": {
     "title": "Selected work",
     "cta": "Read case study",
     "all": "All work"
@@ -63,10 +63,13 @@
     "title": "Recently",
     "empty": "Recent activity will appear here soon."
   },
-  "convergence": {
+  "base": {
     "title": "Let's build something",
     "sub": "Open to internships and full-time roles.",
     "cta": "Get in touch"
+  },
+  "story": {
+    "skip": "Skip the story"
   },
   "nav": {
     "work": "Work",
@@ -188,7 +191,7 @@
     "home": "Back home"
   },
   "easter": {
-    "hint": "You found it. Press R to change the spectrum."
+    "hint": "You found it. Press R to change the light."
   },
   "category": {
     "web": "Web",
@@ -206,6 +209,6 @@
   },
   "styleguide": {
     "title": "Style tile",
-    "lead": "The locked visual direction for Refraction: tokens, type, components and motion, in Day and Night."
+    "lead": "The locked visual direction for Summit: tokens, type, components and motion, in Day and Night."
   }
 }

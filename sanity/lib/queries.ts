@@ -50,7 +50,7 @@ export const skillsQuery = defineQuery(/* groq */ `
   *[_type == "skill"] | order(order asc, name asc){
     "id": _id,
     name,
-    beam,
+    face,
     order
   }
 `);

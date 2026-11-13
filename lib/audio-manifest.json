@@ -1,0 +1,22 @@
+{
+  "ambient": {
+    "src": "/audio/ambient.m4a",
+    "durationMs": 18000,
+    "bytes": 228874,
+    "loop": [
+      1000,
+      16000,
+      true
+    ]
+  },
+  "glass-click": {
+    "src": "/audio/glass-click.m4a",
+    "durationMs": 500,
+    "bytes": 7249
+  },
+  "glass-hover": {
+    "src": "/audio/glass-hover.m4a",
+    "durationMs": 280,
+    "bytes": 6056
+  }
+}

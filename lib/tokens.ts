@@ -30,7 +30,7 @@ export type PaletteToken = keyof typeof palette;
  * - `ink-600`     muted body text (6.87:1 on ivory-50).
  * - `orange-800`  small accent text on ivory-100, where orange-700 only reaches 4.28:1.
  * - `orange-400`  small accent text in Night, where orange-500 only reaches 3.77:1 on green-900.
- * - `amber-400`   the fourth stop of the brand spectrum (PRD section 4), decoration only.
+ * - `amber-400`   the fourth stop of the brand ramp (PRD section 4), decoration only.
  */
 export const derivedTokens: readonly PaletteToken[] = [
   "ink-600",
@@ -125,8 +125,8 @@ export const primaryButton = { bg: "orange-500", fg: "ink-900" } as const satisf
   fg: PaletteToken;
 };
 
-/** Brand spectrum used for dispersion instead of a rainbow (PRD section 4). */
-export const spectrum: readonly PaletteToken[] = [
+/** Brand ramp: the colour stops of the light running down the faces, instead of a rainbow (PRD section 4). */
+export const lightRamp: readonly PaletteToken[] = [
   "ivory-50",
   "sage-300",
   "green-700",

@@ -1,9 +1,9 @@
 {
-  "name": "refraction-studio",
+  "name": "summit-studio",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Sanity Studio for the Refraction portfolio. Deployed separately to *.sanity.studio.",
+  "description": "Sanity Studio for the Summit portfolio. Deployed separately to *.sanity.studio.",
   "scripts": {
     "dev": "sanity dev",
     "build": "sanity build",

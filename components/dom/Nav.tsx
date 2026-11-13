@@ -74,7 +74,7 @@ export function Nav({ cv, availabilityLabel }: NavProps) {
   );
 
   return (
-    <header className="no-print fixed inset-x-0 top-0 z-50">
+    <header className="site-header no-print fixed inset-x-0 top-0 z-50">
       <div className="bg-surface/75 border-line/60 border-b backdrop-blur-md">
         <div className="container-page flex h-(--nav-height) items-center justify-between gap-3">
           <Link

@@ -64,6 +64,18 @@ test("unknown URLs return a localized 404", async ({ page }) => {
   );
 });
 
+test("404 pages follow the visitor's theme", async ({ browser }) => {
+  // A notFound() response is rendered on the client, where the inline theme
+  // script never runs; AppEffects has to apply the theme instead.
+  const context = await browser.newContext({ colorScheme: "dark" });
+  const page = await context.newPage();
+  const response = await page.goto("/this-page-does-not-exist?tier=low");
+  expect(response?.status()).toBe(404);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Lost in the light/);
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "night");
+  await context.close();
+});
+
 test("/en redirects to the unprefixed English URL", async ({ page }) => {
   await page.goto("/en/work?tier=low");
   expect(new URL(page.url()).pathname).toBe("/work");
@@ -124,4 +136,47 @@ test("revalidation webhook rejects unsigned requests", async ({ request }) => {
   // 401 with a configured secret, 500 without one; never a successful revalidation.
   expect([401, 500]).toContain(response.status());
   expect((await response.json()).revalidated).toBe(false);
+});
+
+/**
+ * The Home story (Spesifikasi Lanjutan 9). `?tier=low` keeps these independent
+ * of the GPU: the DOM half of the story runs the same with or without WebGL.
+ */
+test.describe("Home story", () => {
+  test("a chapter link lands on that chapter's rest pose", async ({ page }) => {
+    await page.goto("/?tier=low#faces");
+    await expect(page.locator("html")).toHaveClass(/\bstory\b/);
+    const activeFace = page.locator("#faces [data-beat][data-active] h3");
+    await expect(activeFace).toHaveText(/Frontend & Creative/);
+    await expect(activeFace).toBeVisible();
+  });
+
+  test("PageDown steps to the next rest pose and keeps the URL on it", async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(isMobile, "keyboard stepping is a desktop interaction");
+    await page.goto("/?tier=low");
+    await expect(page.locator("#apex [data-beat]")).toHaveAttribute("data-active", "");
+    await page.locator("body").click({ position: { x: 5, y: 300 } });
+    await page.keyboard.press("PageDown");
+    await expect(page).toHaveURL(/#ascent$/);
+    await expect(page.locator("#ascent [data-beat]")).toHaveAttribute("data-active", "");
+    await expect(page.getByRole("heading", { name: "Built from the base up." })).toBeVisible();
+  });
+
+  test("reduced motion gets the stacked page, every word visible", async ({ browser }) => {
+    const context = await browser.newContext({ reducedMotion: "reduce" });
+    const page = await context.newPage();
+    await page.goto("/?tier=low");
+    await expect(page.locator("html")).not.toHaveClass(/\bstory\b/);
+    const viewport = page.viewportSize()?.height ?? 800;
+    const facesHeight = await page.locator("#faces").evaluate((element) => element.clientHeight);
+    expect(facesHeight).toBeLessThan(viewport * 2);
+    const opacities = await page
+      .locator("[data-beat]")
+      .evaluateAll((elements) => elements.map((element) => getComputedStyle(element).opacity));
+    expect(new Set(opacities)).toEqual(new Set(["1"]));
+    await context.close();
+  });
 });

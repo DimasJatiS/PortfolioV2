@@ -2,7 +2,7 @@
 
 import { useFrame } from "@react-three/fiber";
 import { easing } from "maath";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, type RefObject } from "react";
 import {
   BufferAttribute,
   BufferGeometry,
@@ -59,7 +59,7 @@ function buildGeometry(count: number): BufferGeometry {
  * (stagger-char, 20ms each) the first time the scene appears, then lean very
  * slightly with the cursor.
  */
-export function Rays({ count }: { count: number }) {
+export function Rays({ count, visibility }: { count: number; visibility?: RefObject<number> }) {
   const materialRef = useRef<ShaderMaterial>(null);
   const progress = useRef(0);
 
@@ -96,7 +96,7 @@ export function Rays({ count }: { count: number }) {
       easing.dampC(u.uColor.value, sceneColors[theme].ray, 1 / damp3d.max, delta);
     }
     u.uProgress.value = progress.current;
-    u.uOpacity.value = theme === "night" ? 0.7 : 0.55;
+    u.uOpacity.value = (theme === "night" ? 0.7 : 0.55) * (visibility?.current ?? 1);
   });
 
   return (

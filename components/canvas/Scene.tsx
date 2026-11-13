@@ -14,6 +14,7 @@ import { PerfHud } from "./PerfHud";
 import { Pyramid } from "./Pyramid";
 import { Rays } from "./Rays";
 import { SceneEnvironment } from "./SceneEnvironment";
+import { StoryRig } from "./StoryRig";
 
 interface SceneProps {
   tier: "high" | "medium";
@@ -33,10 +34,11 @@ const IDLE_SPIN = 0.16;
  * off-centre placement used behind the editorial pages. Everything is damped
  * with maath, so motion is frame-rate independent.
  */
-function Rig({ mode, quality }: { mode: SceneMode; quality: QualitySettings }) {
+function Rig({ mode, quality }: { mode: Exclude<SceneMode, "story">; quality: QualitySettings }) {
   const group = useRef<Group>(null);
   const spin = useRef<Group>(null);
   const viewport = useThree((state) => state.viewport);
+  const size = useThree((state) => state.size);
   const camera = useThree((state) => state.camera);
 
   useFrame((_, delta) => {
@@ -50,7 +52,11 @@ function Rig({ mode, quality }: { mode: SceneMode; quality: QualitySettings }) {
     // crosses its middle (like the summit key visual) and the copy stays clear.
     const scale = hero ? fit * 0.72 : fit * 0.42;
     const x = hero ? 0 : viewport.width * 0.3;
-    const y = hero ? 0.41 : viewport.height * 0.22;
+    // Editorial pages on phones: tuck the pyramid into the band between the nav
+    // and the title (PageHeader reserves it), so it never sits behind the text.
+    // 768px is the `md` breakpoint that the static pyramid and PageHeader use.
+    const narrow = size.width < 768;
+    const y = hero ? 0.41 : viewport.height * (narrow ? 0.36 : 0.22);
 
     if (group.current) {
       easing.damp3(group.current.position, [x, y, 0], smooth, delta);
@@ -134,7 +140,7 @@ export default function Scene({ tier, mode, active, locked, showPerf }: ScenePro
           "webglcontextlost",
           (event) => {
             // The GPU dropped the context (driver reset, memory pressure).
-            // Fall back to the static prism instead of showing a dead canvas.
+            // Fall back to the static pyramid instead of showing a dead canvas.
             event.preventDefault();
             console.warn("[scene] WebGL context lost; switching to the static fallback.");
             useAppStore.getState().setWebgl("failed");
@@ -164,7 +170,7 @@ export default function Scene({ tier, mode, active, locked, showPerf }: ScenePro
       )}
 
       <SceneEnvironment />
-      <Rig mode={mode} quality={quality} />
+      {mode === "story" ? <StoryRig quality={quality} /> : <Rig mode={mode} quality={quality} />}
       <FirstFrame />
       <InvalidateOnChange mode={mode} />
       {showPerf && <PerfHud />}

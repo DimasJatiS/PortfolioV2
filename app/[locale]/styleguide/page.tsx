@@ -5,7 +5,7 @@ import { AvailabilityBadge } from "@/components/dom/AvailabilityBadge";
 import { Button } from "@/components/dom/Button";
 import { PageHeader } from "@/components/dom/PageHeader";
 import { ProjectCard } from "@/components/dom/ProjectCard";
-import { StaticPrism } from "@/components/dom/StaticPrism";
+import { StaticPyramid } from "@/components/dom/StaticPyramid";
 import { Tag } from "@/components/dom/Tag";
 import { KineticText } from "@/components/ui/kinetic-text";
 import { AA_TEXT, contrastRatio, gradeContrast } from "@/lib/contrast";
@@ -15,7 +15,7 @@ import {
   derivedTokens,
   palette,
   primaryButton,
-  spectrum,
+  lightRamp,
   surfaces,
   themes,
   type PaletteToken,
@@ -104,7 +104,11 @@ function ContrastTable({ theme }: { theme: Theme }) {
       ] as const
     ).map(([role, token, minimum]) => {
       const ratio = contrastRatio(palette[token], palette[tokens.bg]);
+      // orange-500 never reaches 3:1 on ivory-100, so on cards it is decoration
+      // only (tests/tokens.test.ts pins this); say so instead of showing a failure.
+      const decorative = role.startsWith("Accent") && ratio < minimum;
       return {
+        decorative,
         surface,
         role,
         token,
@@ -139,13 +143,17 @@ function ContrastTable({ theme }: { theme: Theme }) {
         {rows.map((row) => (
           <tr key={`${row.surface}-${row.role}`} className="border-line/60 border-b">
             <td className="py-1.5 pr-3">{SURFACE_LABEL[row.surface]}</td>
-            <td className="py-1.5 pr-3">{row.role}</td>
+            <td className="py-1.5 pr-3">
+              {row.decorative ? "Accent (decoration only, never text)" : row.role}
+            </td>
             <td className="py-1.5 pr-3">
               {row.token} / {row.bg}
             </td>
             <td className="py-1.5 text-right whitespace-nowrap">
-              {row.ratio.toFixed(2)} {row.pass ? "✓" : "✗"}{" "}
-              <span className="text-muted">{gradeContrast(row.ratio)}</span>
+              {row.ratio.toFixed(2)} {row.decorative ? "–" : row.pass ? "✓" : "✗"}{" "}
+              <span className="text-muted">
+                {row.decorative ? "exempt" : gradeContrast(row.ratio)}
+              </span>
             </td>
           </tr>
         ))}
@@ -165,13 +173,14 @@ function ThemeTile({ theme, availability }: { theme: Theme; availability: string
 
       {/* Hero sample */}
       <div className="relative flex flex-col items-center gap-4 overflow-hidden py-6 text-center">
-        <div className="pointer-events-none absolute inset-x-0 top-0 mx-auto aspect-square w-56 opacity-90">
-          <StaticPrism />
+        {/* Same order as the real hero: eyebrow, flare, then the name across the glass. */}
+        <div className="pointer-events-none absolute inset-x-0 top-10 mx-auto aspect-square w-56 opacity-90">
+          <StaticPyramid />
         </div>
         <p className="type-label text-accent-text relative">LONG LIVE LEARNER</p>
         <KineticText
           text="DIMAS JATI"
-          className="type-designer text-heading text-step-3 relative mt-14 block"
+          className="type-designer text-heading text-step-3 relative mt-28 block"
         />
         <p className="type-statement text-heading text-step-2 relative max-w-[20ch]">
           Software engineer turning curiosity into{" "}
@@ -202,7 +211,7 @@ function ThemeTile({ theme, availability }: { theme: Theme; availability: string
 
       {/* Project card */}
       <div>
-        <p className="type-label text-muted mb-4">Project card / shard</p>
+        <p className="type-label text-muted mb-4">Project card / block</p>
         <div className="max-w-md">
           <ProjectCard
             project={SAMPLE_PROJECT}
@@ -252,7 +261,7 @@ export default async function StyleguidePage({ params }: Props) {
     <>
       <PageHeader
         title={t("styleguide.title")}
-        eyebrow="F0 · Refraction"
+        eyebrow="F0 · Summit"
         lead={t("styleguide.lead")}
       />
 
@@ -326,12 +335,12 @@ export default async function StyleguidePage({ params }: Props) {
               {contrastRatio(palette["ivory-50"], palette["orange-500"]).toFixed(2)} : 1.
             </p>
             <h3 className="type-label text-heading mt-10 mb-3">
-              Brand spectrum (dispersion)
+              Brand ramp (light on the faces)
             </h3>
             <div
               className="border-line h-10 rounded-full border"
               style={{
-                background: `linear-gradient(90deg, ${spectrum.map((token) => palette[token]).join(", ")})`,
+                background: `linear-gradient(90deg, ${lightRamp.map((token) => palette[token]).join(", ")})`,
               }}
             />
           </section>
@@ -366,7 +375,7 @@ export default async function StyleguidePage({ params }: Props) {
                 },
                 {
                   role: "Label · Geist Mono, 0.08em",
-                  sample: "01 / 05 · Incidence",
+                  sample: "01 / 05 · Apex",
                   className: "type-label",
                 },
               ].map((row) => (

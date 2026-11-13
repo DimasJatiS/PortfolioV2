@@ -6,6 +6,7 @@ import { AppEffects } from "@/components/dom/AppEffects";
 import { Footer } from "@/components/dom/Footer";
 import { Nav } from "@/components/dom/Nav";
 import { SkipLink } from "@/components/dom/SkipLink";
+import { SmoothScroll } from "@/components/dom/SmoothScroll";
 import { ThemeScript } from "@/components/dom/ThemeScript";
 import { routing } from "@/i18n/routing";
 import { getAvailabilityLabel } from "@/lib/availability";
@@ -93,6 +94,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[lo
         <NextIntlClientProvider>
           <SkipLink label={t("skip")} />
           <AppEffects />
+          <SmoothScroll />
           <CanvasRoot />
           <Nav cv={getCvLink(settings)} availabilityLabel={availabilityLabel} />
           <main id="content" tabIndex={-1} className="relative z-10 outline-none">

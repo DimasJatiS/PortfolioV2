@@ -2,7 +2,7 @@ import { z } from "zod";
 import {
   ACTIVITY_TYPES,
   AVAILABILITY_MODES,
-  BEAMS,
+  FACES,
   EXPERIENCE_KINDS,
   PROJECT_CATEGORIES,
   SOCIAL_PLATFORMS,
@@ -117,11 +117,11 @@ export type SiteSettings = z.infer<typeof siteSettingsSchema>;
 export const skillSchema = z.object({
   id: requiredText,
   name: requiredText,
-  /** Skills without a beam are stack tags only and stay out of the spectrum. */
-  beam: z
+  /** Skills without a face are stack tags only and stay out of the faces. */
+  face: z
     .string()
     .nullish()
-    .transform((value) => BEAMS.find((beam) => beam === value)),
+    .transform((value) => FACES.find((face) => face === value)),
   order: z
     .number()
     .nullish()

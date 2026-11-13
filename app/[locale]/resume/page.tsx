@@ -3,10 +3,10 @@ import { getFormatter, getTranslations } from "next-intl/server";
 import { ButtonLink } from "@/components/dom/Button";
 import { PageHeader } from "@/components/dom/PageHeader";
 import { getExperiences, getSiteSettings, getSkills } from "@/lib/content";
-import { formatLinkLabel, getCvLink, groupSkillsByBeam } from "@/lib/content-utils";
+import { formatLinkLabel, getCvLink, groupSkillsByFace } from "@/lib/content-utils";
 import { resolveLocale } from "@/lib/locale";
 import { alternatesFor } from "@/lib/seo";
-import { BEAMS, type Experience } from "@/sanity/types";
+import { FACES, type Experience } from "@/sanity/types";
 
 type Props = PageProps<"/[locale]/resume">;
 
@@ -34,7 +34,7 @@ export default async function ResumePage({ params }: Props) {
     getSkills(),
   ]);
   const cv = getCvLink(settings);
-  const beams = groupSkillsByBeam(skills);
+  const faces = groupSkillsByFace(skills);
 
   const formatMonth = (value: string) =>
     format.dateTime(new Date(value), {
@@ -147,13 +147,13 @@ export default async function ResumePage({ params }: Props) {
               {t("resume.skills")}
             </h2>
             <dl className="flex flex-col gap-4">
-              {BEAMS.map((beam) => (
-                <div key={beam} className="grid-page gap-y-1">
+              {FACES.map((face) => (
+                <div key={face} className="grid-page gap-y-1">
                   <dt className="text-heading col-span-4 font-semibold md:col-span-2 lg:col-span-3">
-                    {t(`spectrum.beam.${beam}`)}
+                    {t(`faces.items.${face}`)}
                   </dt>
                   <dd className="col-span-4 lg:col-span-9">
-                    {beams[beam].map((skill) => skill.name).join(", ")}
+                    {faces[face].map((skill) => skill.name).join(", ")}
                   </dd>
                 </div>
               ))}

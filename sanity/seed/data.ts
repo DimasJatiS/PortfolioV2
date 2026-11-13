@@ -36,9 +36,9 @@ const key = (value: string) =>
    Skills
 ---------------------------------------------------------------------------- */
 
-type Beam = "frontend-creative" | "backend-data" | "mobile-ai" | "design-collab";
+type Face = "frontend-creative" | "backend-data" | "mobile-ai" | "design-collab";
 
-const beamSkills: Record<Beam, string[]> = {
+const faceSkills: Record<Face, string[]> = {
   "frontend-creative": [
     "React",
     "Next.js",
@@ -69,7 +69,7 @@ const beamSkills: Record<Beam, string[]> = {
   ],
 };
 
-/** Used as project stack tags only; they do not appear in the skill spectrum. */
+/** Used as project stack tags only; they do not appear in the skill faces. */
 const stackOnlySkills = [
   "FastAPI",
   "DNN on HeAR embeddings",
@@ -84,12 +84,12 @@ const stackOnlySkills = [
 const skillId = (name: string) => `skill-${key(name)}`;
 
 const skills: SeedDocument[] = [
-  ...Object.entries(beamSkills).flatMap(([beam, names]) =>
+  ...Object.entries(faceSkills).flatMap(([face, names]) =>
     names.map((name, index) => ({
       _id: skillId(name),
       _type: "skill",
       name,
-      beam,
+      face,
       order: index + 1,
     })),
   ),
@@ -191,10 +191,10 @@ const projects: SeedDocument[] = [
     liveUrl: "https://fe-sia-ugn-ten.vercel.app/",
   },
   {
-    _id: "project-refraction",
+    _id: "project-summit",
     _type: "project",
-    title: "Portfolio “Refraction”",
-    slug: { _type: "slug", current: "refraction" },
+    title: "Portfolio “Summit”",
+    slug: { _type: "slug", current: "summit" },
     number: 6,
     featured: false,
     category: ["web", "creative"],

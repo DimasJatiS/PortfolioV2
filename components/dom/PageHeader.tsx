@@ -11,8 +11,10 @@ interface PageHeaderProps {
 
 /** Shared header of the editorial pages (Work, About, Lab, Writing, ...). */
 export function PageHeader({ title, eyebrow, lead, children }: PageHeaderProps) {
+  // The top padding keeps the title below the ambient pyramid, which sits in the
+  // top-right corner under the nav (CanvasRoot / Scene) and is small on phones.
   return (
-    <header className="container-page pt-[calc(var(--nav-height)+4rem)] pb-12 md:pt-[calc(var(--nav-height)+7rem)] md:pb-16">
+    <header className="container-page pt-[calc(var(--nav-height)+7rem)] pb-12 md:pb-16">
       {eyebrow && <p className="type-label text-muted mb-6">{eyebrow}</p>}
       <KineticText
         as="h1"

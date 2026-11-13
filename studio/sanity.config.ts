@@ -8,8 +8,8 @@ import { structure } from "./structure";
 assertConfigured();
 
 export default defineConfig({
-  name: "refraction",
-  title: "Refraction — Portfolio",
+  name: "summit",
+  title: "Summit — Portfolio",
   projectId,
   dataset,
   plugins: [structureTool({ structure }), visionTool()],

@@ -2,6 +2,8 @@
 
 /* `night:` variant, driven by the data-theme attribute (never by a class). */
 @custom-variant night (&:where([data-theme="night"], [data-theme="night"] *));
+/* The Home story is on (section 13): motion allowed and JavaScript running. */
+@custom-variant story (&:where(.story, .story *));
 
 /* ==========================================================================
    1. Raw palette — PRD section 5. Mirrored in lib/tokens.ts (kept in sync by
@@ -84,6 +86,14 @@
   --inv-accent-text: var(--orange-400);
   --inv-line: var(--green-700);
   --inv-line-strong: var(--sage-300);
+  /* A card inside the inverse surface: Night's alt pair (tested in tokens.test.ts). */
+  --inv-alt-bg: var(--green-900);
+  --inv-alt-accent-text: var(--orange-400);
+
+  /* Static pyramid faces (components/dom/StaticPyramid.tsx). */
+  --pyramid-hi: var(--ivory-50);
+  --pyramid-mid: var(--sage-300);
+  --pyramid-lo: var(--green-700);
 
   --grain-opacity: 0.07;
   --grain-blend: multiply;
@@ -111,6 +121,15 @@
   --inv-accent-text: var(--orange-700);
   --inv-line: var(--sage-300);
   --inv-line-strong: var(--green-700);
+  /* A card inside the inverse surface: Day's alt pair (tested in tokens.test.ts). */
+  --inv-alt-bg: var(--ivory-100);
+  --inv-alt-accent-text: var(--orange-800);
+
+  /* Dark glass in Night: the ivory hero name crosses the pyramid and must stay
+     readable on it (ivory-50 on green-700 is 7.6:1; on sage it was under 2:1). */
+  --pyramid-hi: var(--green-700);
+  --pyramid-mid: var(--green-700);
+  --pyramid-lo: var(--green-900);
 
   --grain-opacity: 0.045;
   --grain-blend: screen;
@@ -270,6 +289,10 @@
   --accent-text: var(--inv-accent-text);
   --line: var(--inv-line);
   --line-strong: var(--inv-line-strong);
+  /* An alt surface (a card) inside the inverse one takes the opposite theme's
+     alt surface, so its text tokens and background still match. */
+  --alt-bg: var(--inv-alt-bg);
+  --alt-accent-text: var(--inv-alt-accent-text);
   background-color: var(--bg);
   color: var(--fg);
 }
@@ -328,6 +351,9 @@
   font-weight: 600;
   line-height: 1.02;
   letter-spacing: var(--tracking-display);
+  /* Clash Display's space is narrow and the negative tracking eats most of it;
+     without this, words visibly run together ("Lightin,workout."). */
+  word-spacing: 0.16em;
 }
 
 /* Instrument Serif italic accent inside a statement. */
@@ -339,7 +365,7 @@
 }
 
 /* ==========================================================================
-   8. Hairline — the 1px beam reused as a section divider
+   8. Hairline — the 1px line reused as a section divider
    ========================================================================== */
 @utility hairline {
   height: 1px;
@@ -484,7 +510,7 @@
 
 /* ==========================================================================
    13. Hero name — tracking narrows from 0.6em to 0.3em as it appears
-       (PRD 7.2, Incidence). One-off, and skipped under reduced motion.
+       (PRD 7.2, Apex). One-off, and skipped under reduced motion.
    ========================================================================== */
 @keyframes tracking-in {
   from {
@@ -516,4 +542,93 @@
 .rise-in {
   animation: rise-in var(--dur-m) var(--ease-light) both;
   animation-delay: calc(var(--order, 0) * var(--stagger-line));
+}
+
+/* ==========================================================================
+   13. Home story (Spesifikasi Lanjutan 9). ThemeScript adds `html.story`
+       before first paint unless the visitor prefers reduced motion. Without
+       it (or without JavaScript) the Home is a normal stacked page.
+   ========================================================================== */
+
+/* Lenis 1.3.27 (lenis/dist/lenis.css): the rules this site relies on. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Chapter heights come from lib/chapters.ts; phones get 60% of desktop. */
+html.story .story-chapter {
+  height: calc(var(--chapter-h-mobile) * 1svh);
+}
+
+@media (min-width: 48rem) {
+  html.story .story-chapter {
+    height: calc(var(--chapter-h) * 1svh);
+  }
+}
+
+html.story .story-panel {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: clip;
+}
+
+/* A beat is visible around its rest pose. StoryDriver writes the damped
+   progress to --p on #story. Mirrors beatVisibility() in lib/chapters.ts
+   (BEAT_FADE = 0.02); enters from above and leaves upwards (section 1). */
+html.story [data-beat] {
+  --beat-in: clamp(0, (var(--p, 0) - var(--beat-start) + 0.02) / 0.02, 1);
+  --beat-out: clamp(0, (var(--beat-end) + 0.02 - var(--p, 0)) / 0.02, 1);
+  opacity: min(var(--beat-in), var(--beat-out));
+  translate: 0 calc((2 - var(--beat-in) - var(--beat-out)) * -1.25rem);
+}
+
+html.story [data-beat]:not([data-active]) {
+  pointer-events: none;
+}
+
+/* Beats that take turns in the same place: one face, one project at a time. */
+html.story .story-stack {
+  display: grid;
+}
+
+html.story .story-stack > * {
+  grid-area: 1 / 1;
+}
+
+/* Without the story, chapters paint their own surface; inside it, the scene and
+   the world layer behind the canvas do (Spesifikasi Lanjutan 11.3). */
+html.story .story-chapter.surface-inverse,
+html.story .story-chapter.surface-alt {
+  background-color: transparent;
+}
+
+.story-world {
+  background: var(--inv-bg);
+  opacity: var(--story-invert, 0);
+}
+
+/* The nav follows the world while the camera is inside the pyramid. */
+html[data-world="inverse"] .site-header {
+  --bg: var(--inv-bg);
+  --fg: var(--inv-fg);
+  --fg-muted: var(--inv-fg-muted);
+  --heading: var(--inv-heading);
+  --accent-text: var(--inv-accent-text);
+  --line: var(--inv-line);
+  --line-strong: var(--inv-line-strong);
+  color: var(--fg);
 }

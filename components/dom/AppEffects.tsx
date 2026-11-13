@@ -15,9 +15,22 @@ export function AppEffects() {
   useEffect(() => {
     const store = useAppStore;
 
-    // The inline ThemeScript already set data-theme; the store adopts it.
-    const applied = document.documentElement.getAttribute("data-theme");
-    if (isTheme(applied)) store.setState({ theme: applied });
+    // The inline ThemeScript normally set data-theme before first paint, and the
+    // store just adopts it. Pages that Next.js renders on the client never run
+    // that script, and every 404 is one of them (a `notFound()` response is an
+    // empty error shell that the router fills in). So resolve the theme again
+    // with the same precedence — stored choice, then the system — and correct
+    // the document when it disagrees.
+    const stored = readStorage(STORAGE_KEYS.theme);
+    const theme = isTheme(stored)
+      ? stored
+      : window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "night"
+        : "day";
+    if (document.documentElement.getAttribute("data-theme") !== theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+    }
+    store.setState({ theme });
 
     // Sound never starts on its own (PRD 9.2); only an explicit "on" is restored.
     store.setState({ sound: readStorage(STORAGE_KEYS.sound) === "on" });
@@ -25,7 +38,12 @@ export function AppEffects() {
     const cleanups: Array<() => void> = [];
 
     const motionQuery = window.matchMedia(REDUCED_MOTION_QUERY);
-    const onMotionChange = () => store.getState().setReducedMotion(motionQuery.matches);
+    const onMotionChange = () => {
+      store.getState().setReducedMotion(motionQuery.matches);
+      // The Home story follows the setting live; ThemeScript set it before paint.
+      document.documentElement.classList.toggle("story", !motionQuery.matches);
+      if (motionQuery.matches) store.getState().setStory(false);
+    };
     onMotionChange();
     motionQuery.addEventListener("change", onMotionChange);
     cleanups.push(() => motionQuery.removeEventListener("change", onMotionChange));

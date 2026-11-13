@@ -14,7 +14,7 @@ interface ProjectCardProps {
 }
 
 /**
- * Project card / shard. The frame fills on hover (the Create with Swift tile
+ * Project card / block. The frame fills on hover (the Create with Swift tile
  * pattern). The title link is stretched over the whole card, so there is one
  * tab stop and one clear accessible name per project.
  */

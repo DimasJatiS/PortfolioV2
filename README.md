@@ -1,8 +1,8 @@
-# Refraction
+# Summit
 
 Immersive 3D portfolio of **Dimas Jati Satria — Software Engineer**.
-One light goes in, many colours come out: a glass pyramid guides the scroll,
-and the work is the spectrum.
+One apex, four faces: a glass pyramid guides the scroll,
+and the work is built from the base up.
 
 Live: [dimassj.vercel.app](https://dimassj.vercel.app) · Status: **F1 — foundation and 3D spike**
 
@@ -38,6 +38,8 @@ site renders the seed content in `sanity/seed/data.ts`.
 | `pnpm test:e2e` | Playwright smoke tests (run `pnpm build` first) |
 | `pnpm format` | Prettier |
 | `pnpm assets` | Fetch Clash Display, sync GPU benchmark tables |
+| `pnpm audio` | Synthesise the ambient pad and glass clicks into `public/audio/` (original, no third-party licence) |
+| `pnpm model` | Build `public/models/pyramid.glb` with Blender, headless (needs `blender` on PATH) |
 | `pnpm seed` | Import seed content into Sanity (`--dry-run`, `--overwrite`) |
 
 Useful URLs while developing:
@@ -45,6 +47,9 @@ Useful URLs while developing:
 - `/styleguide` — the style tile: tokens, contrast table, type, components, Day and Night
 - `?tier=high|medium|low` — force a quality tier (and disable auto-degrade)
 - `?perf` — FPS, draw calls, triangles, DPR overlay
+- `/?progress=0.42` — open the Home story at that point (0–1); `/#faces` lands on a chapter
+- `?freeze` — stop time-based motion, so one progress value is one exact frame
+- `?chapters` — overlay with story progress, chapter and key track values
 
 ## Connecting Sanity
 
@@ -79,6 +84,15 @@ tests/  e2e/           Vitest unit tests, Playwright smoke tests
 
 ### Decisions worth knowing
 
+**The Home is a film played by the scroll.** `lib/chapters.ts` maps the story
+(heights, progress ranges, rest poses); `StoryDriver` turns native scroll,
+smoothed by Lenis, into damped progress; `lib/story.ts` and
+`lib/camera-path.ts` turn progress into every animated value as pure
+functions, so a frame is identical whether reached scrolling down or up (unit
+tested). Text stays real HTML in sticky chapter panels and is shown by CSS
+around each rest pose. With `prefers-reduced-motion` or without JavaScript, the
+Home is an ordinary stacked page.
+
 **One persistent canvas.** `CanvasRoot` lives in the root layout, behind the
 DOM. Text, links and forms stay real HTML (SEO, accessibility, text selection),
 and navigating never remounts WebGL.
@@ -88,8 +102,8 @@ replaces it only when the device can afford it:
 
 | Condition | Result |
 | --- | --- |
-| No WebGL, context lost, scene error | Static SVG prism |
-| `detect-gpu` tier 0–1, or under 30 fps for 2 s | Static SVG prism |
+| No WebGL, context lost, scene error | Static SVG pyramid |
+| `detect-gpu` tier 0–1, or under 30 fps for 2 s | Static SVG pyramid |
 | Tier 2, or tier 3 on mobile | Scene at DPR 1–1.5, 4 samples, no backside pass |
 | Tier 3 desktop | Scene at DPR ≤ 2, 8 samples, backside pass |
 | `prefers-reduced-motion` | One still frame, no animation |
@@ -121,8 +135,14 @@ themes against WCAG AA. The audit added three shades to the PRD palette
 | Item | Budget | Now |
 | --- | --- | --- |
 | Fonts (4 families, Latin subset) | ≤ 160 KB | 96 KB |
-| 3D assets | ≤ 2.5 MB | 0.41 MB (HDRI downscaled from 1.6 MB) |
+| 3D assets, first chapter (what the loader waits for) | ≤ 1.2 MB | 0.41 MB (HDRI downscaled from 1.6 MB) |
+| 3D assets, whole story (loaded per chapter) | ≤ 5 MB | 0.41 MB |
+| Audio (loaded only when sound is on) | ≤ 450 KB | 236 KB |
 | Draw calls | ≤ 100 | 4 |
+
+The budgets follow PRD v2.0: the Home page is a scroll-driven story in five
+chapters. Its graybox (camera path, block shell, inversion, keyboard and deep
+links) is built; dispersion, the guide ray, callouts and project media are next.
 
 ## Assets and licences
 

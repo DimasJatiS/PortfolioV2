@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { Component, useEffect, useState, type ReactNode } from "react";
-import { StaticPrism } from "@/components/dom/StaticPrism";
+import { StaticPyramid } from "@/components/dom/StaticPyramid";
 import { usePathname } from "@/i18n/navigation";
 import {
   detectQualityTier,
@@ -58,11 +58,11 @@ function readDebugFlags(): DebugFlags {
  * The persistent background layer. It lives in the root layout, so navigating
  * between pages never unmounts the canvas.
  *
- * It always renders the static SVG prism first. The WebGL scene replaces it only
+ * It always renders the static SVG pyramid first. The WebGL scene replaces it only
  * when the device can afford it:
  *
- *   no WebGL / context lost / scene error → static prism
- *   tier low (weak GPU, or FPS < 30 for 2s) → static prism
+ *   no WebGL / context lost / scene error → static pyramid
+ *   tier low (weak GPU, or FPS < 30 for 2s) → static pyramid
  *   tier medium / high                      → live scene
  *   prefers-reduced-motion                  → live scene, one still frame
  *
@@ -70,7 +70,8 @@ function readDebugFlags(): DebugFlags {
  */
 export function CanvasRoot() {
   const pathname = usePathname();
-  const mode: SceneMode = pathname === "/" ? "hero" : "ambient";
+  const story = useAppStore((state) => state.story);
+  const mode: SceneMode = pathname === "/" ? (story ? "story" : "hero") : "ambient";
 
   const tier = useAppStore((state) => state.tier);
   const webgl = useAppStore((state) => state.webgl);
@@ -79,6 +80,8 @@ export function CanvasRoot() {
   const [debug, setDebug] = useState<DebugFlags>({ forcedTier: null, showPerf: false });
   const [tabVisible, setTabVisible] = useState(true);
   const [inView, setInView] = useState(true);
+  /** The hero is on screen (the static fallback only belongs there). */
+  const [heroInView, setHeroInView] = useState(true);
 
   // Capability detection, once.
   useEffect(() => {
@@ -114,14 +117,22 @@ export function CanvasRoot() {
   }, []);
 
   // On editorial pages the scene only belongs to the page header: once that has
-  // scrolled away, fade the layer out and stop rendering.
+  // scrolled away, fade the layer out and stop rendering. In the Home story it
+  // stays until the story itself has scrolled away.
   useEffect(() => {
     let frame = 0;
     const measure = () => {
       frame = 0;
-      // Home: while the hero is on screen. Editorial pages: while the header is.
-      const limit = window.innerHeight * (mode === "hero" ? 0.95 : 0.55);
-      setInView(window.scrollY < limit);
+      const heroLimit = window.innerHeight * (mode === "ambient" ? 0.55 : 0.95);
+      const hero = window.scrollY < heroLimit;
+      setHeroInView(hero);
+      if (mode === "story") {
+        const storyRoot = document.getElementById("story");
+        const bottom = storyRoot?.getBoundingClientRect().bottom ?? 0;
+        setInView(bottom > window.innerHeight * 0.5);
+      } else {
+        setInView(hero);
+      }
     };
     const onScroll = () => {
       if (frame === 0) frame = window.requestAnimationFrame(measure);
@@ -137,7 +148,8 @@ export function CanvasRoot() {
   }, [mode]);
 
   const liveTier = webgl === "ready" && tier !== null && tier !== "low" ? tier : null;
-  const showStatic = liveTier === null || !sceneReady;
+  // Until per-chapter stills exist (F3), the static pyramid only belongs to the hero.
+  const showStatic = (liveTier === null || !sceneReady) && (mode !== "story" || heroInView);
 
   return (
     <div
@@ -149,16 +161,20 @@ export function CanvasRoot() {
         inView ? "opacity-100" : "opacity-0",
       )}
     >
+      {/* The inverted world of the story (Spesifikasi Lanjutan 11.3). StoryDriver
+          sets --story-invert from 0 to 1 while the camera is inside the pyramid. */}
+      <div className="story-world absolute inset-0" />
+
       <div
         className={cn(
           "ease-inout absolute transition-[opacity,transform] duration-(--dur-l)",
-          mode === "hero"
-            ? "top-[40%] left-1/2 aspect-square w-[min(88vw,58vh)] -translate-x-1/2 -translate-y-1/2"
-            : "top-[calc(var(--nav-height)+0.5rem)] right-[max(0.5rem,5vw)] aspect-square w-[min(40vw,30vh)]",
+          mode === "ambient"
+            ? "top-[calc(var(--nav-height)+0.5rem)] right-[max(0.5rem,5vw)] aspect-square w-[min(24vw,30vh)] md:w-[min(40vw,30vh)]"
+            : "top-[40%] left-1/2 aspect-square w-[min(88vw,58vh)] -translate-x-1/2 -translate-y-1/2",
           showStatic ? "opacity-100" : "opacity-0",
         )}
       >
-        <StaticPrism />
+        <StaticPyramid />
       </div>
 
       {liveTier && (

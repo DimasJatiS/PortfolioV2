@@ -32,11 +32,11 @@ export type NavKey = (typeof NAV_ITEMS)[number]["key"];
 
 /** Anchors of the five scroll acts on Home (PRD section 4). */
 export const HOME_ACTS = [
-  { id: "incidence", index: 1 },
-  { id: "refraction", index: 2 },
-  { id: "dispersion", index: 3 },
-  { id: "shards", index: 4 },
-  { id: "convergence", index: 5 },
+  { id: "apex", index: 1 },
+  { id: "ascent", index: 2 },
+  { id: "faces", index: 3 },
+  { id: "blocks", index: 4 },
+  { id: "base", index: 5 },
 ] as const;
 
 /**
@@ -49,9 +49,9 @@ export const FEATURES = {
 } as const;
 
 export const STORAGE_KEYS = {
-  theme: "refraction:theme",
-  sound: "refraction:sound",
-  visited: "refraction:visited",
+  theme: "summit:theme",
+  sound: "summit:sound",
+  visited: "summit:visited",
 } as const;
 
 export const TIME_ZONE = "Asia/Jakarta";

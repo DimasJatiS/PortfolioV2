@@ -36,25 +36,25 @@
     "scroll": "Scroll untuk mengikuti cahaya"
   },
   "acts": {
-    "incidence": "Incidence",
-    "refraction": "Refraction",
-    "dispersion": "Dispersion",
-    "shards": "Shards",
-    "convergence": "Convergence"
+    "apex": "Apex",
+    "ascent": "Ascent",
+    "faces": "Faces",
+    "blocks": "Blocks",
+    "base": "Base"
   },
-  "refraction": {
-    "title": "Cahaya masuk, karya keluar."
+  "ascent": {
+    "title": "Dibangun dari dasar ke puncak."
   },
-  "spectrum": {
-    "title": "Spektrum",
-    "beam": {
+  "faces": {
+    "title": "Empat sisi",
+    "items": {
       "frontend-creative": "Frontend & Kreatif",
       "backend-data": "Backend & Data",
       "mobile-ai": "Mobile & AI",
       "design-collab": "Desain & Kolaborasi"
     }
   },
-  "shards": {
+  "blocks": {
     "title": "Karya pilihan",
     "cta": "Baca studi kasus",
     "all": "Semua karya"
@@ -63,10 +63,13 @@
     "title": "Terbaru",
     "empty": "Aktivitas terbaru akan segera tampil di sini."
   },
-  "convergence": {
+  "base": {
     "title": "Ayo bangun sesuatu",
     "sub": "Terbuka untuk magang dan posisi full-time.",
     "cta": "Hubungi aku"
+  },
+  "story": {
+    "skip": "Lewati cerita"
   },
   "nav": {
     "work": "Karya",
@@ -188,7 +191,7 @@
     "home": "Kembali ke beranda"
   },
   "easter": {
-    "hint": "Ketemu. Tekan R untuk mengganti spektrum."
+    "hint": "Ketemu. Tekan R untuk mengganti cahaya."
   },
   "category": {
     "web": "Web",
@@ -206,6 +209,6 @@
   },
   "styleguide": {
     "title": "Style tile",
-    "lead": "Arah visual Refraction yang dikunci: token, tipografi, komponen, dan motion, dalam mode Day dan Night."
+    "lead": "Arah visual Summit yang dikunci: token, tipografi, komponen, dan motion, dalam mode Day dan Night."
   }
 }

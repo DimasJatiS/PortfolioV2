@@ -28,10 +28,10 @@ const rayEnds = Array.from({ length: RAY_COUNT }, (_, index) => {
  * frame, so the hero is never an empty box. It is themed entirely through CSS
  * variables, which makes it follow Day/Night for free.
  */
-export function StaticPrism({ className }: { className?: string }) {
-  // Gradient ids must be unique per instance; the style tile renders two prisms.
+export function StaticPyramid({ className }: { className?: string }) {
+  // Gradient ids must be unique per instance; the style tile renders two pyramids.
   const uid = useId().replace(/[^a-zA-Z0-9]/g, "");
-  const id = (name: string) => `prism-${name}-${uid}`;
+  const id = (name: string) => `pyramid-${name}-${uid}`;
   const ref = (name: string) => `url(#${id(name)})`;
 
   return (
@@ -51,8 +51,8 @@ export function StaticPrism({ className }: { className?: string }) {
           y2="330"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" style={{ stopColor: "var(--ivory-50)", stopOpacity: 0.9 }} />
-          <stop offset="1" style={{ stopColor: "var(--sage-300)", stopOpacity: 0.55 }} />
+          <stop offset="0" style={{ stopColor: "var(--pyramid-hi)", stopOpacity: 0.9 }} />
+          <stop offset="1" style={{ stopColor: "var(--pyramid-mid)", stopOpacity: 0.55 }} />
         </linearGradient>
         <linearGradient
           id={id("face-right")}
@@ -62,8 +62,8 @@ export function StaticPrism({ className }: { className?: string }) {
           y2="320"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" style={{ stopColor: "var(--sage-300)", stopOpacity: 0.5 }} />
-          <stop offset="1" style={{ stopColor: "var(--green-700)", stopOpacity: 0.5 }} />
+          <stop offset="0" style={{ stopColor: "var(--pyramid-mid)", stopOpacity: 0.5 }} />
+          <stop offset="1" style={{ stopColor: "var(--pyramid-lo)", stopOpacity: 0.5 }} />
         </linearGradient>
         <radialGradient
           id={id("flare")}

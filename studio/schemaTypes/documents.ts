@@ -36,10 +36,10 @@ export const skill = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "beam",
-      title: "Beam",
+      name: "face",
+      title: "Face",
       description:
-        "Which beam of the skill spectrum on Home this belongs to. Leave empty for a skill that is only used as a project stack tag.",
+        "Which face of the four skill faces on Home this belongs to. Leave empty for a skill that is only used as a project stack tag.",
       type: "string",
       options: {
         list: [
@@ -50,19 +50,19 @@ export const skill = defineType({
         ],
       },
     }),
-    defineField({ name: "order", title: "Order within the beam", type: "number" }),
+    defineField({ name: "order", title: "Order within the face", type: "number" }),
   ],
   orderings: [
     {
-      name: "beamOrder",
-      title: "Beam, then order",
+      name: "faceOrder",
+      title: "Face, then order",
       by: [
-        { field: "beam", direction: "asc" },
+        { field: "face", direction: "asc" },
         { field: "order", direction: "asc" },
       ],
     },
   ],
-  preview: { select: { title: "name", subtitle: "beam" } },
+  preview: { select: { title: "name", subtitle: "face" } },
 });
 
 export const project = defineType({
@@ -101,7 +101,7 @@ export const project = defineType({
     defineField({
       name: "featured",
       title: "Featured",
-      description: "Shown as a shard on Home. Keep it to three projects.",
+      description: "Shown as a block on Home. Keep it to three projects.",
       type: "boolean",
       group: "card",
       initialValue: false,

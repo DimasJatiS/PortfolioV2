@@ -45,7 +45,7 @@ and still need to be re-exported at 1440p for the new case studies.
 - Tools & Platforms: Git, PostgreSQL, MongoDB, Prisma ORM, Tailwind CSS, GSAP, Android Studio, IntelliJ IDEA, VS Code, Vite
 - Creative & Soft Skills: Figma, Adobe Photoshop, Lightroom, Illustrator, OBS Studio, Microsoft Office, Event Management, Cross-functional teamwork
 
-Regrouped into the four beams from the PRD (section 11).
+Regrouped into the four faces from the PRD (section 11).
 
 ## Contact
 

@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import type { ChapterId } from "./chapters";
 import type { QualityTier } from "./quality-tier";
 import { lowerTier } from "./quality-tier";
 import { STORAGE_KEYS } from "./site";
@@ -31,6 +32,16 @@ interface AppState {
   scrollVelocity: number;
   pointer: { x: number; y: number };
 
+  /**
+   * `true` while the Home story drives the scene (Spesifikasi Lanjutan 9). Then
+   * `scroll` is the damped story progress, 0–1.
+   */
+  story: boolean;
+  /** Chapter in view; changes a handful of times per story, safe to subscribe to. */
+  chapter: ChapterId | null;
+  /** `?freeze`: stop every time-based motion, so a progress value is one exact frame. */
+  frozen: boolean;
+
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
   setSound: (sound: boolean) => void;
@@ -41,6 +52,8 @@ interface AppState {
   setSceneReady: (ready: boolean) => void;
   setScroll: (progress: number, velocity?: number) => void;
   setPointer: (x: number, y: number) => void;
+  setStory: (story: boolean) => void;
+  setChapter: (chapter: ChapterId | null) => void;
 }
 
 export function isTheme(value: unknown): value is Theme {
@@ -64,6 +77,9 @@ export const useAppStore = create<AppState>((set, get) => ({
   scroll: 0,
   scrollVelocity: 0,
   pointer: { x: 0, y: 0 },
+  story: false,
+  chapter: null,
+  frozen: false,
 
   setTheme: (theme) => {
     applyThemeToDocument(theme);
@@ -85,6 +101,10 @@ export const useAppStore = create<AppState>((set, get) => ({
   setSceneReady: (sceneReady) => set({ sceneReady }),
   setScroll: (progress, velocity = 0) =>
     set({ scroll: clamp01(progress), scrollVelocity: velocity }),
+  setStory: (story) => set({ story }),
+  setChapter: (chapter) => {
+    if (get().chapter !== chapter) set({ chapter });
+  },
   setPointer: (x, y) => {
     // Mutate in place: per-frame readers hold the same object, and no component
     // subscribes to pointer movement.

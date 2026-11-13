@@ -3,7 +3,7 @@
 import { Billboard } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { easing } from "maath";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, type RefObject } from "react";
 import { AdditiveBlending, Color, NormalBlending, type ShaderMaterial } from "three";
 import { damp3d } from "@/lib/motion";
 import { useAppStore } from "@/lib/store";
@@ -18,8 +18,11 @@ const FLARE_SIZE = 1.5;
  * light disappears on a light background); in Night it switches to additive and
  * burns brighter, as the PRD asks.
  */
-export function ApexFlare() {
+export function ApexFlare({ visibility }: { visibility?: RefObject<number> }) {
   const materialRef = useRef<ShaderMaterial>(null);
+  // Theme brightness, eased. The story's visibility multiplies it undamped, so
+  // the flare is gone exactly when the camera passes through the apex.
+  const brightness = useRef({ value: 1 });
 
   const uniforms = useMemo(
     () => ({
@@ -34,19 +37,20 @@ export function ApexFlare() {
   useFrame((state, delta) => {
     const material = materialRef.current;
     if (!material) return;
-    const { theme, reducedMotion } = useAppStore.getState();
+    const { theme, reducedMotion, frozen } = useAppStore.getState();
     const u = material.uniforms as typeof uniforms;
     const night = theme === "night";
 
     // Reduced motion: hold the flare at its resting brightness, no pulse.
-    u.uTime.value = reducedMotion ? 1 : state.clock.elapsedTime;
+    u.uTime.value = reducedMotion || frozen ? 1 : state.clock.elapsedTime;
     easing.damp(
-      u.uIntensity,
+      brightness.current,
       "value",
       night ? 1.35 : 1,
       reducedMotion ? 0 : 1 / damp3d.max,
       delta,
     );
+    u.uIntensity.value = brightness.current.value * (visibility?.current ?? 1);
 
     const blending = night ? AdditiveBlending : NormalBlending;
     if (material.blending !== blending) {

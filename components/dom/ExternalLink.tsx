@@ -21,7 +21,9 @@ export function ExternalLink({
     <a
       href={href}
       className={cn(
-        "text-accent-text decoration-accent/50 hover:decoration-accent underline decoration-1 underline-offset-4 transition-colors duration-(--dur-xs)",
+        // py-1 lifts the pointer target above 24px (WCAG 2.2 target size) without
+        // changing the line height.
+        "text-accent-text decoration-accent/50 hover:decoration-accent py-1 underline decoration-1 underline-offset-4 transition-colors duration-(--dur-xs)",
         className,
       )}
       {...(newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}

@@ -5,13 +5,13 @@
  * importing them must not pull the validation library into the browser bundle.
  */
 
-export const BEAMS = [
+export const FACES = [
   "frontend-creative",
   "backend-data",
   "mobile-ai",
   "design-collab",
 ] as const;
-export type Beam = (typeof BEAMS)[number];
+export type Face = (typeof FACES)[number];
 
 export const PROJECT_CATEGORIES = ["web", "mobile", "ai", "creative"] as const;
 export type ProjectCategory = (typeof PROJECT_CATEGORIES)[number];
